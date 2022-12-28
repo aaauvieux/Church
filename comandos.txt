@@ -1,0 +1,11 @@
+git init
+
+virtualenv -p python3 env
+
+pip install uvicorn fastapi
+
+uvicorn main:app --reload
+
+pip install sqlalchemy pymysql cryptography
+
+pip install werkzeug
