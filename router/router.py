@@ -6,6 +6,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from typing import List
 from config.db import engine
 
+IMAGEDIR = "issets/avatar/"
+
 user = APIRouter()
 
 @user.get("/")
@@ -31,7 +33,7 @@ def create_user(data_user: UserSchema):
     with engine.connect() as conn:
         new_user = data_user.dict()
         new_user["user_passw"] = generate_password_hash(data_user.user_passw, "pbkdf2:sha256:30", 30)
-        
+        new_user["image"] = f"{IMAGEDIR}{data_user.image}"
         conn.execute(users.insert().values(new_user))
         
         return Response(status_code=HTTP_201_CREATED)
@@ -58,8 +60,9 @@ def user_login(data_user: DataUser):
 def update_user(data_update: UserSchema, user_id: str):
     with engine.connect() as conn:
         encryp_passw = generate_password_hash(data_update.user_passw, "pbkdf2:sha256:30", 30)
+        new_image = f"{IMAGEDIR}{data_update.image}"
         
-        conn.execute(users.update().values(name=data_update.name, username=data_update.username, user_passw=encryp_passw).where(users.c.id == user_id))
+        conn.execute(users.update().values(name=data_update.name, username=data_update.username, user_passw=encryp_passw, image=new_image).where(users.c.id == user_id))
         
         result = conn.execute(users.select().where(users.c.id == user_id)).first()
         

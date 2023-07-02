@@ -6,7 +6,9 @@ class UserSchema(BaseModel):
     name: str
     username: str
     user_passw: str
+    image: str
 
 class DataUser(BaseModel):
     username: str
     user_passw: str
+    image: str
