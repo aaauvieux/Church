@@ -5,8 +5,11 @@ from model.users import users
 from werkzeug.security import generate_password_hash, check_password_hash
 from typing import List
 from config.db import engine
+import os
+from dotenv import load_dotenv
 
-IMAGEDIR = "issets/avatar/"
+load_dotenv()
+imagedir = os.getenv('IMAGEDIR')
 
 user = APIRouter()
 
@@ -33,7 +36,7 @@ def create_user(data_user: UserSchema):
     with engine.connect() as conn:
         new_user = data_user.dict()
         new_user["user_passw"] = generate_password_hash(data_user.user_passw, "pbkdf2:sha256:30", 30)
-        new_user["image"] = f"{IMAGEDIR}{data_user.image}"
+        new_user["image"] = f"{imagedir}{data_user.image}"
         conn.execute(users.insert().values(new_user))
         
         return Response(status_code=HTTP_201_CREATED)
