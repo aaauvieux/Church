@@ -10,6 +10,11 @@ db = os.getenv('DB')
 user_db = os.getenv('USER_DB')
 password_db = os.getenv('PASSWORD_DB')
 
+print(server)
+print(db)
+print(user_db)
+print(password_db)
+
 engine = create_engine(f"mysql+pymysql://{user_db}:{password_db}@{server}:{server_port}/{db}")
 #engine = create_engine("mysql+pymysql://mysql_adrian:123456@localhost:3306/church")
 
