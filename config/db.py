@@ -15,7 +15,8 @@ print(db)
 print(user_db)
 print(password_db)
 
-engine = create_engine(f"mysql+pymysql://{user_db}:{password_db}@{server}:{server_port}/{db}")
+engine = create_engine("mysql+pymysql://sql7631486:ra5aZaGJBR@sql7.freemysqlhosting.net:3306/sql7631486")
+#engine = create_engine(f"mysql+pymysql://{user_db}:{password_db}@{server}:{server_port}/{db}")
 #engine = create_engine("mysql+pymysql://mysql_adrian:123456@localhost:3306/church")
 
 meta_data = MetaData()
