@@ -46,14 +46,14 @@ def user_login(data_user: DataUser):
     with engine.connect() as conn:
         result = conn.execute(users.select().where(users.c.username == data_user.username)).first()
         if result != None:
+            print("a")
             check_passw = check_password_hash(result[3], data_user.user_passw )
+            print("b")
             if check_passw:
                 return {
                     "Status": 200,
                     "message": "Access success"
-                }
-            
-            
+                }    
         return {
             "Status": HTTP_401_UNAUTHORIZED,
             "message": "Access denied"
@@ -63,8 +63,7 @@ def user_login(data_user: DataUser):
 def update_user(data_update: UserSchema, user_id: str):
     with engine.connect() as conn:
         encryp_passw = generate_password_hash(data_update.user_passw, "pbkdf2:sha256:30", 30)
-        new_image = f"{IMAGEDIR}{data_update.image}"
-        
+        new_image = f"{imagedir}{data_update.image}"
         conn.execute(users.update().values(name=data_update.name, username=data_update.username, user_passw=encryp_passw, image=new_image).where(users.c.id == user_id))
         
         result = conn.execute(users.select().where(users.c.id == user_id)).first()
