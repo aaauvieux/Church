@@ -46,9 +46,7 @@ def user_login(data_user: DataUser):
     with engine.connect() as conn:
         result = conn.execute(users.select().where(users.c.username == data_user.username)).first()
         if result != None:
-            print("a")
             check_passw = check_password_hash(result[3], data_user.user_passw )
-            print("b")
             if check_passw:
                 return {
                     "Status": 200,
