@@ -11,4 +11,4 @@ class UserSchema(BaseModel):
 class DataUser(BaseModel):
     username: str
     user_passw: str
-    image: str
+
